@@ -13,7 +13,7 @@ public class PlayRandomSound : MonoBehaviour
     void Start()
     {
 		if (clips.Count == 0) {
-			Destroy(this);
+			Destroy(this.gameObject);
 		}
 		AudioSource source = GetComponent<AudioSource>();
 		source.clip = clips[Random.Range(0, clips.Count - 1)];
@@ -24,7 +24,7 @@ public class PlayRandomSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (audioDur <= 0) Destroy(this);
+		if (audioDur <= 0) Destroy(this.gameObject);
 		audioDur -= Time.deltaTime;
     }
 }
