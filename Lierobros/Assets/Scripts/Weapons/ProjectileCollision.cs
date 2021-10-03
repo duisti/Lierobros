@@ -16,10 +16,16 @@ public class ProjectileCollision : MonoBehaviour
 	private GameObject soundPrefab;
 
 	// general values
-	public float initVelocity = 5f;
-	public float maxLifeTime = 10f;
 
-	public bool diesOnImpact = true;
+	[Tooltip("50 as a base seems pretty good for a stock rigidbody2d")]
+	public float initVelocity = 50f;
+	[Tooltip("Useful if you want a failsafe to keep the projectile bouncing (try PhysicsMaterial first), recommended: 5-10% of initVelocity. " +
+		"Don't set too high in case you hit a ceiling. Negative value has funny results.")]
+	public float rebounceVelocity = 0f;
+	[Tooltip("Seconds until object is force destroyed. Enter 0 for no expiration timer")]
+	public float maxLifeTime = 10f;
+	[Tooltip("A handy way if you want the projectile to bounce around; 0 = infinite bounces, explode on impact = 1, more means that many bounces...")]
+	public int expireAfterBounces = 1;
 
 	bool dead = false;
 
@@ -27,6 +33,12 @@ public class ProjectileCollision : MonoBehaviour
 	Rigidbody2D rg;
 
 	private void Awake() {
+		if (maxLifeTime == 0) {
+			maxLifeTime = Mathf.Infinity;
+		}
+		if (expireAfterBounces == 0) {
+			expireAfterBounces = 1111111;
+		}
 		rg = this.GetComponent<Rigidbody2D>();
 		rg.AddForce(transform.right * initVelocity, ForceMode2D.Impulse);
 	}
@@ -36,8 +48,13 @@ public class ProjectileCollision : MonoBehaviour
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		print("siip");
+		print("Collided with: " + collision.gameObject);
+
+		if (rebounceVelocity != 0) {
+			rg.AddForce(transform.up * rebounceVelocity, ForceMode2D.Impulse);
+		}
 		OnDeath(false);
+		expireAfterBounces -= 1;
 	}
 
 
@@ -48,7 +65,7 @@ public class ProjectileCollision : MonoBehaviour
 		if (soundPrefab != null) {
 			GameObject sound = Instantiate(soundPrefab, transform.position, Quaternion.identity) as GameObject;
 		}
-		if (diesOnImpact) {
+		if (expireAfterBounces <= 0) {
 			Destroy(this.gameObject);
 		}
 		if (timedDeath) Destroy(this.gameObject);
