@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
     public float jumpForce = 30f;
     private Rigidbody2D rigidBody;
     public bool isGrounded = true;
+	[HideInInspector]
     public float moveDir = 0;
     public GameObject sprite;
     
@@ -30,7 +31,8 @@ public class CharacterController : MonoBehaviour
 		Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
         playerPos += movement * Time.deltaTime * speed;
-		transform.position = playerPos;
+		//transform.position = playerPos;
+		rigidBody.MovePosition(playerPos);
         moveDir = movement.x;
         SpriteFlipper(moveDir);
     }
