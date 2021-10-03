@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2682134568983466509}
   - component: {fileID: 2682134568983466508}
   - component: {fileID: 1983598714801013572}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MAN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14055109, y: -0.03123355}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 3.4047213, y: 3.4986854}
   m_Direction: 0
 --- !u!58 &2682134568983466509
@@ -64,7 +64,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14835966, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.882085
 --- !u!50 &2682134568983466508
@@ -82,12 +82,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 7.81
+  m_Material: {fileID: 6200000, guid: 184fca16dd090564c9911ee889aebfcb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &1983598714801013572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,10 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95efaf863c4969b40afe6831592cb7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 400
+  speed: 8
+  jumpForce: 27.5
   isGrounded: 1
-  spriteRotation: 1
   moveDir: 0
   sprite: {fileID: 0}
 --- !u!1 &2682134569217282748
@@ -131,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2682134569217282748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0085, y: 0.0018, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2682134568983466511}

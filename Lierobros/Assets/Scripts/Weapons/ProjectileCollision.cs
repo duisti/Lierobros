@@ -48,7 +48,14 @@ public class ProjectileCollision : MonoBehaviour
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		print("Collided with: " + collision.gameObject);
+		string message = "Collided with: " + collision.gameObject;
+		//failsafe so can't collide with owner(if exists), in such cases just do nothing
+		if (collision.gameObject == owner) {
+			message = message + " (is owner)";
+			print(message);
+			return;
+		}
+		print(message);
 
 		if (rebounceVelocity != 0) {
 			rg.AddForce(transform.up * rebounceVelocity, ForceMode2D.Impulse);
