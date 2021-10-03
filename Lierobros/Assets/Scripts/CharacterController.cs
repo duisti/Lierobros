@@ -31,8 +31,7 @@ public class CharacterController : MonoBehaviour
 		Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
         playerPos += movement * Time.deltaTime * speed;
-		//transform.position = playerPos;
-		rigidBody.MovePosition(playerPos);
+		transform.position = playerPos;
         moveDir = movement.x;
         SpriteFlipper(moveDir);
     }
