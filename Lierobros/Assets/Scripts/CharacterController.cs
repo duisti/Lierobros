@@ -14,10 +14,10 @@ public class CharacterController : MonoBehaviour
 	public float jumpForce = 27.5f;
     private Rigidbody2D rg;
 	public GameObject sprite;
-	//debug
-	//[HideInInspector]
+	[HideInInspector]
 	public bool isGrounded = true;
-	//[HideInInspector]
+	//debug
+	[HideInInspector]
 	public float moveDir = 0;
 	
 	public enum Direction {
