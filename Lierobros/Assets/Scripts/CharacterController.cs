@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 30f;
-    private Rigidbody2D rigidBody;
-    public bool isGrounded = true;
+    public float speed = 8f;
+	[Range(0.00001f, 1)]
+	[Tooltip("Penalty applied to force inputs to left & right while in air. Values between 0.0001 - 1 only. Low = no control, high = all control")]
+	public float airPenalty = 0.2f;
+	public float jumpForce = 27.5f;
+    private Rigidbody2D rg;
+	public GameObject sprite;
+	//debug
 	[HideInInspector]
-    public float moveDir = 0;
-    public GameObject sprite;
+	public bool isGrounded = true;
+	[HideInInspector]
+	public float moveDir = 0;
+	
+	public enum Direction {
+		left = -1,
+		right = 1,
+		none = 0
+	}
+
+	Direction InputDirection = Direction.none;
     
     void Awake() {
-        rigidBody = GetComponent<Rigidbody2D>();
+		rg = GetComponent<Rigidbody2D>();
 		if (sprite == null) {
 			sprite = GameObject.Find("Sprite");
 		}
@@ -28,25 +41,40 @@ public class CharacterController : MonoBehaviour
     }
 
     void Movement() {
-		Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
-        playerPos += movement * Time.deltaTime * speed;
-		transform.position = playerPos;
-        moveDir = movement.x;
-        SpriteFlipper(moveDir);
+        Vector2 movement = new Vector2(Input.GetAxis("Horizontal") * speed, 0f);
+		if (movement.x < 0) {
+			InputDirection = Direction.left;
+		}
+		if (movement.x > 0) {
+			InputDirection = Direction.right;
+		}
+		if (Mathf.Approximately(movement.x, 0)) {
+			InputDirection = Direction.none;
+		}
+		moveDir = movement.x;
+		//old implementation, it works but it's disabled because it didn't allow input in to opposite direction while in air and there's velocity towards the other direction
+		//if ((InputDirection == Direction.left && Mathf.Abs(rg.velocity.x) > Mathf.Abs(movement.x)) ||
+		//	(InputDirection == Direction.right && Mathf.Abs(rg.velocity.x) > Mathf.Abs(movement.x))) {
+		if ((InputDirection == Direction.left && rg.velocity.x > movement.x) ||
+			(InputDirection == Direction.right && rg.velocity.x < movement.x)) {
+			if (!isGrounded) {
+				movement *= airPenalty;
+			}
+			rg.velocity = new Vector2(rg.velocity.x, rg.velocity.y) + movement;
+		}
+		SpriteFlipper();
     }
 
-    void SpriteFlipper(float moveDir) {
-        if (moveDir > 0) {
-            sprite.transform.localScale = new Vector3(1, sprite.transform.localScale.y, sprite.transform.localScale.z);
+    void SpriteFlipper() {
+        if (InputDirection != Direction.none) {
+            sprite.transform.localScale = new Vector3(Mathf.Clamp((float)InputDirection, -1f, 1f), sprite.transform.localScale.y, sprite.transform.localScale.z);
         } 
-        if (moveDir < 0) {
-            sprite.transform.localScale = new Vector3(-1, sprite.transform.localScale.y, sprite.transform.localScale.z);
-        }
     }
 
     void Jump() {
-        rigidBody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+		//old implementation, it's disabled because the jump height varied too much when climbing slopes
+		//rg.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+		rg.velocity = new Vector2(rg.velocity.x, jumpForce);
     }
 
     void OnTriggerStay2D(Collider2D col) {
