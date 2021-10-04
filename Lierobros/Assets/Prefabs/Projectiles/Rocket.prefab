@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6423488562691502199}
   - component: {fileID: 6423488562691502200}
   - component: {fileID: 6423488562691502197}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &6423488562691502200
 CircleCollider2D:
@@ -86,8 +86,9 @@ MonoBehaviour:
   effectPrefab: {fileID: 2018337834780824131, guid: ed60c6afea5bc6a418fd49fc7605a287, type: 3}
   soundPrefab: {fileID: 8017369467628875073, guid: 3a2517dd194247043916c58ea4b7c326, type: 3}
   initVelocity: 50
+  rebounceVelocity: 0
   maxLifeTime: 10
-  diesOnImpact: 1
+  expireAfterBounces: 1
 --- !u!1 &6423488563661392535
 GameObject:
   m_ObjectHideFlags: 0
