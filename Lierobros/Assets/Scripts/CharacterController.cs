@@ -5,16 +5,19 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public float speed = 8f;
+	[Tooltip("How fast we accelerate to the desired speed. Big number means faster. Recommended at least 4-5 times of speed.")]
+	public float acceleration = 32f;
 	[Range(0.00001f, 1)]
-	[Tooltip("Penalty applied to force inputs to left & right while in air. Values between 0.0001 - 1 only. Low = no control, high = all control")]
-	public float airPenalty = 0.2f;
+	[Tooltip("Penalty applied to force inputs to left & right while in air. Values between 0.0001 - 1 only. Low(<0.05) = no control, high(>0.10) = lots of control control." +
+		" Keep in mind that air has no drag, so the value has to be very low for an effect.")]
+	public float airPenalty = 0.05f;
 	public float jumpForce = 27.5f;
     private Rigidbody2D rg;
 	public GameObject sprite;
 	//debug
-	[HideInInspector]
+	//[HideInInspector]
 	public bool isGrounded = true;
-	[HideInInspector]
+	//[HideInInspector]
 	public float moveDir = 0;
 	
 	public enum Direction {
@@ -42,6 +45,7 @@ public class CharacterController : MonoBehaviour
 
     void Movement() {
         Vector2 movement = new Vector2(Input.GetAxis("Horizontal") * speed, 0f);
+		float _acceleration = acceleration;
 		if (movement.x < 0) {
 			InputDirection = Direction.left;
 		}
@@ -57,10 +61,11 @@ public class CharacterController : MonoBehaviour
 		//	(InputDirection == Direction.right && Mathf.Abs(rg.velocity.x) > Mathf.Abs(movement.x))) {
 		if ((InputDirection == Direction.left && rg.velocity.x > movement.x) ||
 			(InputDirection == Direction.right && rg.velocity.x < movement.x)) {
+			//apply air penalty, just a nerf to acceleration
 			if (!isGrounded) {
-				movement *= airPenalty;
+				_acceleration *= airPenalty;
 			}
-			rg.velocity = new Vector2(rg.velocity.x, rg.velocity.y) + movement;
+			rg.velocity = new Vector2(Mathf.MoveTowards(rg.velocity.x, movement.x, _acceleration), rg.velocity.y);
 		}
 		SpriteFlipper();
     }

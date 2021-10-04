@@ -102,11 +102,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
-  airPenalty: 0.2
+  acceleration: 32
+  airPenalty: 0.05
   jumpForce: 27.5
+  sprite: {fileID: 0}
   isGrounded: 1
   moveDir: 0
-  sprite: {fileID: 0}
 --- !u!114 &2682134570246549128
 MonoBehaviour:
   m_ObjectHideFlags: 0
