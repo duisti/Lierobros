@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3111262963274409349}
   - component: {fileID: 3111262963274409348}
-  - component: {fileID: 3111262963274409351}
+  - component: {fileID: 5502770565295313921}
   - component: {fileID: 3111262963274409350}
   - component: {fileID: 1554479118758720718}
   - component: {fileID: 2682134570246549128}
+  - component: {fileID: -1835311695478029180}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -52,8 +53,8 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 3.4047213, y: 3.4986854}
   m_Direction: 0
---- !u!58 &3111262963274409351
-CircleCollider2D:
+--- !u!70 &5502770565295313921
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -65,9 +66,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.882085
+  m_Offset: {x: 0, y: -0.2}
+  m_Size: {x: 3.3, y: 3.21}
+  m_Direction: 0
 --- !u!50 &3111262963274409350
 Rigidbody2D:
   serializedVersion: 4
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firing: 0
+--- !u!114 &-1835311695478029180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111262963274409345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4a9b3ad9dae3641aac380ca93236f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10000
+  maxHealth: 100
 --- !u!1 &3111262963483223350
 GameObject:
   m_ObjectHideFlags: 0

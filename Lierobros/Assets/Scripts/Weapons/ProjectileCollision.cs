@@ -27,6 +27,8 @@ public class ProjectileCollision : MonoBehaviour
 	[Tooltip("A handy way if you want the projectile to bounce around; 0 = infinite bounces, explode on impact = 1, more means that many bounces...")]
 	public int expireAfterBounces = 1;
 
+	Explosion explosion;
+
 	bool dead = false;
 
 	// things to be remembered in private
@@ -40,6 +42,8 @@ public class ProjectileCollision : MonoBehaviour
 			expireAfterBounces = 1111111;
 		}
 		rg = this.GetComponent<Rigidbody2D>();
+		//if this exists, get it
+		explosion = this.GetComponent<Explosion>();
 		rg.AddForce(transform.right * initVelocity, ForceMode2D.Impulse);
 	}
 
@@ -49,13 +53,13 @@ public class ProjectileCollision : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		string message = "Collided with: " + collision.gameObject;
+		print(message);
 		//failsafe so can't collide with owner(if exists), in such cases just do nothing
 		if (collision.gameObject == owner) {
 			message = message + " (is owner)";
 			print(message);
 			return;
 		}
-		print(message);
 
 		if (rebounceVelocity != 0) {
 			rg.AddForce(transform.up * rebounceVelocity, ForceMode2D.Impulse);
@@ -67,10 +71,14 @@ public class ProjectileCollision : MonoBehaviour
 
 	void OnDeath(bool timedDeath) {
 		if (effectPrefab != null) {
+			//Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 359.9f))) <- for future, just random rotates
 			GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity) as GameObject;
 		}
 		if (soundPrefab != null) {
 			GameObject sound = Instantiate(soundPrefab, transform.position, Quaternion.identity) as GameObject;
+		}
+		if (explosion != null) {
+			explosion.Explode();
 		}
 		if (expireAfterBounces <= 0) {
 			Destroy(this.gameObject);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6423488562691502199}
   - component: {fileID: 6423488562691502200}
   - component: {fileID: 6423488562691502197}
+  - component: {fileID: 2479192048192112808}
   m_Layer: 6
   m_Name: Rocket
   m_TagString: Untagged
@@ -89,6 +90,34 @@ MonoBehaviour:
   rebounceVelocity: 0
   maxLifeTime: 10
   expireAfterBounces: 1
+--- !u!114 &2479192048192112808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423488562691502201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e294f6d4276269c41ace33d9fb487d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stampMask:
+    serializedVersion: 2
+    m_Bits: 4294967048
+  Stamp: 1
+  StampPaint: 0
+  StampShape: {fileID: 0}
+  StampColor: {r: 1, g: 1, b: 1, a: 1}
+  StampSize: {x: 5, y: 5}
+  StampRandomDirection: 1
+  force: 10
+  radius: 5
+  damage: 50
+  falloff: 0.25
+  effectMask:
+    serializedVersion: 2
+    m_Bits: 4294966921
 --- !u!1 &6423488563661392535
 GameObject:
   m_ObjectHideFlags: 0

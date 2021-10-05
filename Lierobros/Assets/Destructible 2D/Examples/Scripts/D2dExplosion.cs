@@ -87,6 +87,7 @@ namespace Destructible2D.Examples
 					// Make sure the raycast hit something, and that it wasn't a trigger
 					if (collider != null && collider.isTrigger == false)
 					{
+						print(collider.name + "");
 						var strength    = 1.0f - hit.fraction; // Do less damage if the hit point is far from the explosion
 						var rigidbody2D = collider.attachedRigidbody;
 						var damage      = collider.GetComponentInParent<D2dDamage>();
