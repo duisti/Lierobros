@@ -13,6 +13,8 @@ public class EntityInfo : MonoBehaviour
 
 	bool populated = false;
 
+	CameraFollower currentGameCamera;
+
 	// Start is called before the first frame update
 	private void Awake() {
 		Populate();
@@ -26,6 +28,13 @@ public class EntityInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (currentGameCamera == null && this.gameObject.layer == LayerMask.NameToLayer("Player")) {
+			currentGameCamera = GameObject.Find("GameplayCamera").GetComponent<CameraFollower>();
+			//if it's no longer null, do the thing
+			if (currentGameCamera != null) {
+				currentGameCamera.SetTarget(this.transform);
+			}
+		}
 		if (!populated) {
 			Populate();
 		}
