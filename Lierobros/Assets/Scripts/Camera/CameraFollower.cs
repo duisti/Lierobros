@@ -15,7 +15,7 @@ public class CameraFollower : MonoBehaviour
     }
 
 	// Update is called once per frame
-	private void LateUpdate() {
+	private void FixedUpdate() {
 		MoveCamera();
 	}
 
